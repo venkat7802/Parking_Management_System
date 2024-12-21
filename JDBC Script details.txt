@@ -1,0 +1,36 @@
+use parkingmanagement //databasename
+
+create table Vehicle(
+vehicleId varchar(10) primary key,
+licenseNumber varchar(15) not null,
+vehicleType varchar(20) not null
+);
+
+create table ParkingSlot(
+slotId varchar(20) primary key,
+location varchar(100) not null,
+isAvailable boolean not null,
+price decimal(10,2) not null
+);
+
+create table ParkingSlotBooking(
+bookingId varchar(255) primary key,
+slotId varchar(255),
+vehicleId varchar(255),
+startTime datetime,
+endTime datetime,
+status varchar(50),
+foreign key(slotId) references ParkingSlot(slotId),
+foreign key(vehicleId) references Vehicle(vehicleId)
+);
+
+create table Billing
+(
+billId int(11) auto_increment primary key,
+bookingId varchar(20),
+startTime datetime,
+endTime datetime,
+totalBill decimal(10,2),
+billDate datetime,
+foreign key(bookingId) references ParkingSlotBooking(bookingId)
+);
